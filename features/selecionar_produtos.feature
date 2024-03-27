@@ -41,3 +41,10 @@ Feature: Selecionar Produto
         | 06 | juca          | <branco>     | Epic sadface: Password is required |
         | 07 | <branco>      | <branco>     | Epic sadface: Username is required |
         | 08 | <branco>      | laranja      | Epic sadface: Username is required |
+
+    Scenario: Validar o produto no carrinho
+        Given que acesso o site Sauce Demo
+        And preencho os campos de login com usuario standard_user e senha secret_sauce
+        And adiciono um produto ao carrinho
+        When clico no icone do carrinho
+        Then o produto Sauce Labs Backpack está no carrinho

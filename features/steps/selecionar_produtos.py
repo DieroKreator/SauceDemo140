@@ -16,10 +16,25 @@ def step_impl(context):
 
 # Preencher com usuario e senha   
 @when(u'preencho os campos de login com usuario {usuario} e senha {senha}')
+@given(u'preencho os campos de login com usuario {usuario} e senha {senha}')
 def step_impl(context, usuario, senha):
     context.driver.find_element(By.ID, "user-name").send_keys(usuario)  # preencher o usuario
     context.driver.find_element(By.ID, "password").send_keys(senha)     # preencher a senha
     context.driver.find_element(By.ID, "login-button").click()         # clicar no botão login
+
+@given(u'adiciono um produto ao carrinho')
+def step_impl(context):
+    # valido pagina Home
+    context.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"add-to-cart-sauce-labs-backpack\"]").click()
+    # valido o producto
+    assert context.driver.find_element(By.CSS_SELECTOR, "#item_4_title_link > .inventory_item_name").text == "Sauce Labs Backpack"
+    assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item:nth-child(1) .inventory_item_price").text == "$29.99"
+
+@when(u'clico no icone do carrinho')
+def step_impl(context):
+    # valido a quantidade no medallion do carrinho
+    assert context.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge").text == "1"
+    context.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge").click()
 
 # Preencher com usuario em branco e senha
 @when(u'preencho os campos de login com usuario  e senha {senha}')
@@ -76,6 +91,17 @@ def step_impl(context):
 def step_impl(context, mensagem):
     # validar a mensagem de erro
     assert context.driver.find_element(By.CSS_SELECTOR, "h3").text == mensagem
+
+    # teardown / encerramento
+    context.driver.quit()
+
+@then(u'o produto {produto} está no carrinho')
+def step_impl(context, produto):
+    assert context.driver.find_element(By.CSS_SELECTOR, ".title").text == "Your Cart"
+    assert context.driver.find_element(By.CSS_SELECTOR, ".cart_quantity").text == "1"
+    assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item_name").text == produto
+    assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item_price").text == "$29.99"
+    time.sleep(3)
 
     # teardown / encerramento
     context.driver.quit()
