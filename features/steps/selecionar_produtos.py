@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 @given(u'que acesso o site Sauce Demo')
+@given(u'que entro o site Sauce Demo')
 def step_impl(context):
     # Setup / Inicialização
     context.driver = webdriver.Chrome()              # instanciar o objeto do Selenium webDriver especializado para o Chrome
@@ -28,7 +29,7 @@ def step_impl(context):
 
     # teardown / encerramento
     context.driver.quit()
-    
+
 
 @then(u'exibe a mensagem de erro no login')
 def step_impl(context):
