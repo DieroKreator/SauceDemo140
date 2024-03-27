@@ -13,7 +13,7 @@ Feature: Selecionar Produto
     Scenario Outline: Login Negativo
         Given que entro o site Sauce Demo
         When preencho os campos de login com usuario <usuario> e senha <senha>
-        Then exibe a mensagem <mensagem> de erro no login
+        Then exibe a <mensagem> de erro no login
 
         Examples:
         | id | usuario       | senha        | mensagem                                                                  |
