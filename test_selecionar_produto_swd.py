@@ -1,4 +1,5 @@
 # 1 - Bibliotecas
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -28,3 +29,16 @@ class Teste_Produtos():
         assert self.driver.find_element(By.CSS_SELECTOR, "span.title").text == "Products"                             # confirma se esta escrito Products no elemento
         assert self.driver.find_element(By.ID, "item_4_title_link").text == "Sauce Labs Backpack"                     # confirma se é a mochila
         assert self.driver.find_element(By.CSS_SELECTOR, ".inventory_item:nth-child(1) .inventory_item_price").text == "$29.99" # confirma se é o preco da mochila
+
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"add-to-cart-sauce-labs-backpack\"]").click()
+        assert self.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge").text == "1"
+        self.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge").click()
+
+        assert self.driver.find_element(By.CSS_SELECTOR, ".title").text == "Your Cart"
+        assert self.driver.find_element(By.CSS_SELECTOR, ".cart_quantity").text == "1"
+        assert self.driver.find_element(By.CSS_SELECTOR, ".inventory_item_name").text == "Sauce Labs Backpack"
+        assert self.driver.find_element(By.CSS_SELECTOR, ".inventory_item_price").text == "$29.99"
+        self.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"remove-sauce-labs-backpack\"]").click()
+        self.driver.find_element(By.ID, "react-burger-menu-btn").click()
+        ##time.sleep(20)
+        self.driver.find_element(By.ID, "logout_sidebar_link").click()
