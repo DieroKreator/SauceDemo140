@@ -1,6 +1,6 @@
 # 1  - Bibliotecas / Imports
 import time
-from behave import given, when, then
+from behave import given, when, then # type: ignore
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -31,6 +31,7 @@ def step_impl(context):
     assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item:nth-child(1) .inventory_item_price").text == "$29.99"
 
 @when(u'clico no icone do carrinho')
+@given(u'clico no icone do carrinho')
 def step_impl(context):
     # valido a quantidade no medallion do carrinho
     assert context.driver.find_element(By.CSS_SELECTOR, ".shopping_cart_badge").text == "1"
@@ -70,6 +71,10 @@ def step_impl(context, usuario, senha):
 
     context.driver.find_element(By.ID, "login-button").click()         # clicar no botão login
 
+@when(u'clico no botao para remover o item do carrinho')
+def step_impl(context):
+    context.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"remove-sauce-labs-backpack\"]").click()
+
 @then(u'sou direcionado para página Home')
 def step_impl(context):
     assert context.driver.find_element(By.CSS_SELECTOR, ".title").text == "Products"
@@ -101,7 +106,11 @@ def step_impl(context, produto):
     assert context.driver.find_element(By.CSS_SELECTOR, ".cart_quantity").text == "1"
     assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item_name").text == produto
     assert context.driver.find_element(By.CSS_SELECTOR, ".inventory_item_price").text == "$29.99"
-    time.sleep(3)
+    # time.sleep(3)
+
+@then(u'o item é removido')
+def step_imp(context):
+    assert context.driver.find_element(By.CSS_SELECTOR, ".removed_cart_item")
 
     # teardown / encerramento
     context.driver.quit()

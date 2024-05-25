@@ -48,3 +48,11 @@ Feature: Selecionar Produto
         And adiciono um produto ao carrinho
         When clico no icone do carrinho
         Then o produto Sauce Labs Backpack está no carrinho
+
+    Scenario: Remover o item do carrinho
+        Given que acesso o site Sauce Demo
+        And preencho os campos de login com usuario standard_user e senha secret_sauce
+        And adiciono um produto ao carrinho
+        And clico no icone do carrinho
+        When clico no botao para remover o item do carrinho
+        Then o item é removido
