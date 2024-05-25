@@ -75,6 +75,11 @@ def step_impl(context, usuario, senha):
 def step_impl(context):
     context.driver.find_element(By.CSS_SELECTOR, "*[data-test=\"remove-sauce-labs-backpack\"]").click()
 
+@when(u'clico no botao Logout')
+def step_imp(context):
+    context.driver.find_element(By.ID, "react-burger-menu-btn").click()
+    context.driver.find_element(By.ID, "logout_sidebar_link").click()
+
 @then(u'sou direcionado para página Home')
 def step_impl(context):
     assert context.driver.find_element(By.CSS_SELECTOR, ".title").text == "Products"
@@ -114,3 +119,7 @@ def step_imp(context):
 
     # teardown / encerramento
     context.driver.quit()
+
+@then(u'sou direcionado para página do Login')
+def step_imp(context):
+    assert context.driver.find_element(By.CSS_SELECTOR, "#login-button")
